@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Render 'The World in One Image' for Monday 23 November 2026.
+"""Render 'The World in One Image' for Monday 23 November 2026 — v2.
+
+Full-day rebuild: v1 (built ~02:30 UTC Monday, overnight stories only) was
+deliberately not submitted; this version covers the whole of Monday —
+Nvidia reinstates Jensen Huang and Wall Street surges, the updated Kyiv
+death toll, seven tankers hit, the Sputnik-S report, the G20 close — with
+every fact re-verified against live reporting on Monday evening.
 
 Deterministic Pillow pipeline: no network, no timestamps, no randomness.
 Running it twice must produce byte-identical PNG output.
@@ -55,88 +61,92 @@ F_MAP_LBL = font("sans_b", 11)
 F_NUM = font("sans_b", 16)
 F_BIG_NUM = font("serif_b", 40)
 
-# ---- verified news content: Monday 23 November 2026 ------------------------
-# Every fact below was checked against live reporting (Reuters, AP, CNN,
-# Al Jazeera, Arab News, Kyiv Independent, Xinhua, Dawn) on 23 Nov 2026.
+# ---- verified news content: Monday 23 November 2026 (full day) ------------
+# Every fact below was checked against live reporting on Monday evening
+# (Reuters, AP, CNN, Al Jazeera, Arab News, Kyiv Independent, Xinhua,
+# Dawn, NYT, Washington Post, SCMP, Gulf News, Haaretz, Ukrainska Pravda).
+# Market figures are the closing numbers (Nasdaq +6.8%, S&P 500 +5.1%,
+# Dow +2.8%, Nvidia +33.1% to $167.12 — QNA/Bay Street).
 MASTHEAD_STRAP = "MONDAY 23 NOVEMBER 2026  ·  27 STORIES  ·  5 REGIONS  ·  ONE DAY"
 
 STATS = [
+    ("+33%", "Nvidia on Huang's return"),
     ("NO DEAL", "COP31 ends with no pact"),
     ("258", "Democrats' House seats"),
-    ("11", "killed in Kyiv region"),
-    ("5", "tankers hit in 3 days"),
-    ("24", "bodies from factory fire"),
-    ("1,000+", "Delta flights delayed"),
+    ("14", "killed in Kyiv region"),
+    ("7", "tankers hit since Nov 16"),
+    ("2,190", "Delta flights delayed Sun"),
 ]
 
 FEATURES = [
     {
-        "num": "01", "place": "ANTALYA", "cat": "CLIMATE",
+        "num": "01", "place": "NEW YORK", "cat": "MARKETS",
+        "head": "Huang is back — Wall Street roars",
+        "deck": ("Huang returns as Nvidia CEO; shares +33% to $167, "
+                 "Nasdaq +6.8%, S&P 500 +5%."),
+        "src": "Reuters · WSJ",
+        "art": "nvidia",
+    },
+    {
+        "num": "02", "place": "ANTALYA", "cat": "CLIMATE",
         "head": "COP31 collapses with no deal",
         "deck": ("The EU, Panama and island states reject a draft that never "
-                 "mentions fossil fuels. The longest COP ever ends with no pact."),
+                 "mentions fossil fuels. The longest COP ever ends with no "
+                 "pact."),
         "src": "Reuters · CNN",
         "art": "cop",
     },
     {
-        "num": "02", "place": "WASHINGTON", "cat": "POLITICS",
+        "num": "03", "place": "WASHINGTON", "cat": "POLITICS",
         "head": "Democrats clinch 258 House seats",
-        "deck": ("A North Carolina recount gives Hubbard the 258th seat — the "
-                 "biggest majority since 1992. Democrats also take the Senate."),
+        "deck": ("Hubbard wins the North Carolina recount: the 258th seat, "
+                 "biggest since 1992. Democrats also take the Senate, 56-44."),
         "src": "AP · Reuters",
         "art": "house",
-    },
-    {
-        "num": "03", "place": "DYMER, UKRAINE", "cat": "WAR",
-        "head": "Russian strikes kill 11 across Kyiv region",
-        "deck": ("A drone collapses a five-storey block in Dymer, killing nine; "
-                 "a supermarket and a home are also hit."),
-        "src": "Arab News · Kyiv Independent",
-        "art": "dymer",
     },
 ]
 
 SMALLS = [
-    ("04", "STRAIT OF HORMUZ", "CONFLICT",
-     "Tanker attacks hit highest level since war began",
-     "Three tankers struck Fri–Sat; Iran's navy says two more hit mines on Sunday.",
-     "AP · UKMTO"),
+    ("04", "DYMER, UKRAINE", "WAR",
+     "14 killed across the Kyiv region",
+     "Dymer block collapses, killing 11; two die in Vyshneve.",
+     "Kyiv Independent · Reuters"),
     ("05", "BENGHAZI", "WAR",
-     "Sea drones hit Russian warship in Libya",
-     "Corvette Merkury badly damaged and later capsized; 10 hurt, Libyan officials say.",
+     "Sea drones sink Russian warship in Libya",
+     "Merkury badly damaged, later capsized; Libya files a UN complaint.",
      "AP · Reuters"),
-    ("06", "RAMALLAH", "CONFLICT",
+    ("06", "GULF OF OMAN", "CONFLICT",
+     "Tanker attacks reach highest level of the war",
+     "Seven tankers hit since Nov 16, JMIC says; new incident off Chabahar.",
+     "AP · Gulf News"),
+    ("07", "BERLIN", "SECURITY",
+     "Russia may orbit a nuclear-armed satellite",
+     "NATO intel: 'Sputnik-S' could launch by December; Rutte vows defence.",
+     "Reuters · Arab News"),
+    ("08", "RAMALLAH", "CONFLICT",
      "Settlers torch 12 vehicles in West Bank",
-     "Overnight fires in four villages; Israel opens an inquiry.",
+     "Overnight fires in four villages; Eisenkot calls it 'Jewish terrorism'.",
      "Reuters"),
-    ("07", "NEW YORK", "MARKETS",
-     "Washington demands answers on Nvidia",
-     "SEC probe reported Fri; shares -14%. Bessent demands answers.",
-     "Reuters · NYT"),
-    ("08", "JOHANNESBURG", "DIPLOMACY",
-     "G20 opens on African soil for first time",
-     "South Africa hosts the first G20 summit ever held in Africa.",
-     ""),
-    ("09", "ATLANTA", "TRAVEL",
-     "Delta glitch delays 1,000+ flights",
-     "Automation fault snarls Sunday travel at the Atlanta hub days before Thanksgiving.",
+    ("09", "JOHANNESBURG", "DIPLOMACY",
+     "G20 closes on African soil for first time",
+     "Leaders adopt a 122-paragraph declaration without the US.",
+     "Xinhua"),
+    ("10", "ATLANTA", "TRAVEL",
+     "Delta glitch delays 2,190 flights",
+     "Weight-and-balance outage snarls Sunday travel; 92 more axed Monday.",
      "AP"),
-    ("10", "SEOUL", "POLITICS",
+    ("11", "SEOUL", "POLITICS",
      "South Korea minister quits over exam chaos",
      "Education chief Choi Kyo-jin resigns after AI cheating confusion.",
      "Xinhua"),
-    ("11", "KHARTOUM", "WAR",
+    ("12", "KHARTOUM", "WAR",
      "Drones hit UN building in Khartoum",
-     "Strikes damage a UN facility; three killed in a house in Omdurman.",
+     "Strikes damage a UN facility; Saudi Arabia and Egypt condemn the attacks.",
      "Arab News"),
-    ("12", "CIKANDE", "DISASTER",
+    ("13", "CIKANDE", "DISASTER",
      "24 bodies pulled from factory fire",
-     "Search resumes Monday after the candy-factory blaze in Banten, Indonesia.",
-     "Xinhua"),
-    ("13", "WASHINGTON", "DEFENCE",
-     "Hegseth curbs US–Canada defence ties",
-     "Classified memo imposes new restrictions, the Washington Post reports.",
-     "Washington Post"),
+     "Search resumes Monday for about 30 still missing.",
+     "Reuters"),
 ]
 
 BRIEFS = [
@@ -150,19 +160,19 @@ BRIEFS = [
     ("Paris", "Sixth weekend of marches draws tens of thousands. (AFP)"),
     ("Washington", "Trump vows a 10% cap on credit-card rates. (AP)"),
     ("Gulf", "US denies Iran downed an F-16 over the Gulf. (CENTCOM)"),
-    ("Washington", "Trump threatens a tax on firms building AI data centres abroad."),
-    ("Riyadh", "Coalition intercepts a Houthi drone aimed at the Riyadh region."),
-    ("Gaza", "Strikes go on despite the truce; displaced people protest."),
+    ("Washington", "Trump may resume Iran strikes after New Year if no deal. (Fox)"),
+    ("Tel Aviv", "23 Israeli soldier suicides in 2026, a 16-year high. (Haaretz)"),
+    ("Jerusalem", "Netanyahu urges Trump to strike Iran 'as soon as possible'. (Kan)"),
     ("Baghdad", "Basra power-station fire kills 4 and hurts 35. (Reuters)"),
 ]
 
-DATE_CHECK = ("NOT MONDAY — reported before today: Shenzhen summit (Thu) · "
-              "Chapo Isidro captured (Fri) · Nvidia -14% (Fri) · "
-              "BepiColombo at Mercury (Sat) · Alcaraz wins ATP Finals (Sun)")
+DATE_CHECK = ("NOT MONDAY — before today: Shenzhen summit (Thu) · "
+              "Chapo Isidro (Fri) · Peru quake (Fri) · Brazil storm (Fri) · "
+              "Nvidia -14% (Fri) · BepiColombo (Sat) · Alcaraz (Sun)")
 
-FOOTER = "Sources: Reuters · AP · CNN · Al Jazeera · Arab News · Kyiv Independent · Xinhua · Dawn · NYT · Washington Post."
+FOOTER = "Sources: Reuters · AP · CNN · Al Jazeera · Arab News · Kyiv Independent · Xinhua · Dawn · NYT · Washington Post · SCMP · Gulf News."
 
-REGION_CHIPS = ["NORTH AMERICA 4", "MIDDLE EAST 3", "AFRICA 3", "ASIA 2", "EUROPE 1"]
+REGION_CHIPS = ["NORTH AMERICA 3", "EUROPE 3", "MIDDLE EAST 2", "AFRICA 3", "ASIA 2"]
 
 # ---- text helpers ------------------------------------------------------------
 def wrap(draw, text, fnt, width):
@@ -184,6 +194,21 @@ def text(draw, xy, s, fnt, fill=INK, anchor="la"):
     draw.text(xy, s, font=fnt, fill=fill, anchor=anchor)
 
 # ---- banner art (simple flat shapes, drawn, not photos) ----------------------
+def banner_nvidia(d, x, y, w, h):
+    d.rectangle([x, y, x + w, y + h], fill=(12, 58, 40))
+    # rising market line with arrowhead
+    pts = [(x + 14, y + 92), (x + 70, y + 78), (x + 118, y + 84),
+           (x + 170, y + 56), (x + 222, y + 40), (x + 268, y + 22)]
+    d.line(pts, fill=(118, 185, 0), width=5)
+    d.polygon([(x + 268, y + 22), (x + 246, y + 24), (x + 262, y + 42)],
+              fill=(118, 185, 0))
+    # chip square
+    d.rectangle([x + 18, y + 14, x + 66, y + 62], fill=(24, 38, 64),
+                outline=(118, 185, 0), width=2)
+    d.text((x + 28, y + 26), "NVDA", font=F_SMALL_HEAD, fill=(255, 255, 255))
+    d.text((x + w - 108, y + h - 46), "+33%", font=F_BIG_NUM,
+           fill=(255, 255, 255))
+
 def banner_cop(d, x, y, w, h):
     d.rectangle([x, y, x + w, y + h], fill=(16, 74, 78))
     d.ellipse([x + w // 2 - 52, y + 8, x + w // 2 + 52, y + 112], fill=(247, 243, 234))
@@ -206,21 +231,7 @@ def banner_house(d, x, y, w, h):
                     fill=(24, 38, 64))
     d.text((x + w - 78, y + 10), "258", font=F_BIG_NUM, fill=(255, 255, 255))
 
-def banner_dymer(d, x, y, w, h):
-    d.rectangle([x, y, x + w, y + h], fill=(58, 58, 62))
-    # standing block left, collapsed jagged block right
-    d.rectangle([x + 16, y + 34, x + 96, y + 112], fill=(210, 205, 192))
-    for r in range(3):
-        for c in range(3):
-            d.rectangle([x + 28 + c * 22, y + 46 + r * 22,
-                         x + 44 + c * 22, y + 60 + r * 22], fill=(58, 58, 62))
-    d.polygon([(x + 120, y + 112), (x + 140, y + 66), (x + 168, y + 88),
-               (x + 196, y + 60), (x + 228, y + 92), (x + 252, y + 112)],
-              fill=(150, 143, 128))
-    d.line([x + 30, y + 8, x + 150, y + 40], fill=(232, 196, 90), width=3)
-    d.text((x + w - 52, y + h - 30), "11", font=F_BIG_NUM, fill=(255, 255, 255))
-
-BANNERS = {"cop": banner_cop, "house": banner_house, "dymer": banner_dymer}
+BANNERS = {"nvidia": banner_nvidia, "cop": banner_cop, "house": banner_house}
 
 # ---- stylised world map ------------------------------------------------------
 # Rough continent outlines as (lon, lat) polygons; equirectangular projection.
@@ -247,17 +258,17 @@ CONTINENTS = [
      (153, -27), (146, -19), (142, -11), (135, -12), (130, -13), (122, -14),
      (114, -22)],
 ]
-# numbered pins: (lon, lat, label, label dx, label dy) — 2 and 13 share
-# one Washington dot, labelled "2·13", so the two stories stay visible.
-# Dots are nudged a few degrees where the map scale would merge them;
-# the map is stylised, not a survey chart.
+# numbered pins: (lon, lat, label, label dx, label dy) — one pin per story
+# 01–13. Dots are nudged a few degrees where the map scale would merge
+# them; the map is stylised, not a survey chart.
 PINS = [
-    (30.7, 36.9, "1", -4, -16), (-77.0, 38.9, "2·13", -12, -16),
-    (33.0, 56.0, "3", 6, -14), (56.5, 26.6, "4", 8, -6),
-    (20.1, 32.1, "5", -16, 8), (35.2, 31.9, "6", 6, 10),
-    (-70.0, 44.0, "7", 6, -8), (28.0, -26.2, "8", 8, -6),
-    (-88.0, 30.0, "9", -16, -6), (127.0, 37.5, "10", 8, -6),
-    (32.5, 15.6, "11", 8, -6), (106.1, -6.2, "12", 8, -6),
+    (-74.0, 40.7, "1", 6, -14), (30.7, 36.9, "2", -4, -16),
+    (-77.0, 38.9, "3", -12, -16), (30.7, 50.9, "4", 6, -14),
+    (20.1, 32.1, "5", -16, 8), (56.5, 26.6, "6", 8, -6),
+    (37.6, 55.7, "7", 8, -14), (35.2, 31.9, "8", 6, 10),
+    (28.0, -26.2, "9", 8, -6), (-84.4, 33.7, "10", -22, -6),
+    (127.0, 37.5, "11", 8, -6), (32.5, 15.6, "12", 8, -6),
+    (106.1, -6.2, "13", 8, -6),
 ]
 
 def draw_map(d, x, y, w, h):
@@ -299,7 +310,7 @@ def render():
     d.line([0, 168, W, 168], fill=GREY_LINE, width=1)
 
     # features: three columns
-    fx, fy, fw, fh = 24, 180, 312, 272
+    fx, fy, fw, fh = 24, 180, 312, 284
     gap = 16
     for i, f in enumerate(FEATURES):
         x = fx + i * (fw + gap)
@@ -319,9 +330,9 @@ def render():
         d.text((x + 12, fy + fh - 20), f["src"], font=F_FOOT, fill=MUTED)
 
     # smalls: two columns x five rows
-    sy = 464
+    sy = 476
     col_w = (W - 48 - 16) // 2
-    row_h = 50
+    row_h = 48
     for i, (num, place, cat, head, deck, src) in enumerate(SMALLS):
         col, row = i % 2, i // 2
         x = 24 + col * (col_w + 16)

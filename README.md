@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/news-image-20261123/WV629/news-image-20261123/rank.svg)](https://make.fun/bounty/news-image-20261123/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123)
 [![reward](https://make.fun/badge/news-image-20261123/WV629/news-image-20261123/reward.svg)](https://make.fun/bounty/news-image-20261123?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123)
 
-A deterministic Pillow program that draws Monday 23 November 2026's world news — COP31 collapse, Democrats' 258 House seats, Kyiv strikes and 24 more stories — into one 1024x1024 image.
+A deterministic Pillow program that draws Monday 23 November 2026's full day of world news — Nvidia's Huang comeback and the Wall Street surge, the COP31 collapse, Democrats' 258 House seats, Kyiv strikes and 23 more stories — into one 1024x1024 image.
 
 ## Run it
 
